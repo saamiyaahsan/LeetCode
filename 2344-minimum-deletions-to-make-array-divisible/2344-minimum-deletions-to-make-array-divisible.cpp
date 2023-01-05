@@ -4,14 +4,14 @@ public:
         
         sort(numsDivide.begin(),numsDivide.end());
         
-        sort(nums.begin(),nums.end());
-        
         int GCD = numsDivide[0];
         
         for(int i=1;i<numsDivide.size();i++)
         {
             GCD = __gcd(GCD,numsDivide[i]);
         }
+        
+        sort(nums.begin(),nums.end());
         
         int cnt = 0;
         
@@ -32,6 +32,7 @@ public:
         {
             return -1;
         }
+        
         return cnt;
     }
 };
