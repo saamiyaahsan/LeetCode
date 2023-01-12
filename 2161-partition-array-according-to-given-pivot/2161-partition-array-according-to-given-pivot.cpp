@@ -1,33 +1,60 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
-    vector<int> pivotArray(vector<int>& nums, int pivot) {
+    ListNode* partition(ListNode* head, int x) {
         
-        vector<int>ans;
+        ListNode* p;
+        p = head;
         
-        for(int i=0;i<nums.size();i++)
+        vector<int> res;
+        vector<int> ans;
+        
+        if(head == NULL || head->next == NULL)
         {
-            if(nums[i] < pivot)
+          return head;    
+        }
+        
+        while(p != NULL)
+        {
+            if(p->val < x)
             {
-                ans.push_back(nums[i]);
+                res.push_back(p->val);
+                p = p->next;
+            }
+            
+            else
+            {
+                ans.push_back(p->val);
+                p = p->next;
             }
         }
         
-        for(int i=0;i<nums.size();i++)
+        int i;
+        
+        for(i=0;i<ans.size();i++)
         {
-            if(nums[i] == pivot)
-            {
-                ans.push_back(nums[i]);
-            }
+            res.push_back(ans[i]);
         }
         
-        for(int i=0;i<nums.size();i++)
+        i = 0;
+        p = head;
+        
+        while(p != NULL)
         {
-            if(nums[i] > pivot)
-            {
-                ans.push_back(nums[i]);
-            }
+            p->val = res[i];
+            i++;
+            p = p->next;
         }
         
-        return ans;
+        return head;
     }
 };
