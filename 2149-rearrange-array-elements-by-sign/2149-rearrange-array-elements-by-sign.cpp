@@ -1,26 +1,56 @@
 class Solution {
 public:
-    vector<int> rearrangeArray(vector<int>& nums) {
+    vector<int> pivotArray(vector<int>& nums, int pivot) {
         
-        vector<int>ans(nums.size(),0);
+        int i,j;
         
-        int i=0,j=1;
+        vector<int> res;
+        vector<int> ans;
+        vector<int> val;
         
-        for(auto it : nums)
+        for(i=0;i<nums.size();i++)
         {
-            if(it > 0)
+            if(nums[i] > pivot)
             {
-                ans[i] = it;
-                i = i + 2;
+                res.push_back(nums[i]);
+            }
+            
+            else if(nums[i] == pivot)
+            {
+                val.push_back(nums[i]);
             }
             
             else
             {
-                ans[j] = it;
-                j = j + 2;
+                ans.push_back(nums[i]);
             }
         }
         
-        return ans;
+        nums.clear();
+        i=0;
+        
+        while(i<ans.size())
+        {
+            nums.push_back(ans[i]);
+            i++;
+        }
+        
+        i = 0;
+        
+        while(i<val.size())
+        {
+            nums.push_back(val[i]);
+            i++;
+        }
+        
+        i=0;
+        
+        while(i<res.size())
+        {
+            nums.push_back(res[i]);
+            i++;
+        }
+        
+        return nums;
     }
 };
