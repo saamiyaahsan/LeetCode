@@ -4,8 +4,8 @@ public:
         
         unordered_map<long long,long long>mp;
         
-        long long currsum = 0 , maxlen = 0;
-    
+        long long maxlen = 0,currsum = 0;
+        
         for(int i=0;i<nums.size();i++)
         {
             currsum = currsum + nums[i];
@@ -27,6 +27,5 @@ public:
         }
         
         return maxlen;
-        
     }
 };
