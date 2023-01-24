@@ -13,6 +13,8 @@ class Solution {
 public:
     vector<vector<int>> verticalOrder(TreeNode* root) {
         
+        
+        
         vector<vector<int>>res;
         
         if(root == NULL)
@@ -26,29 +28,27 @@ public:
         
         q.push({root,0});
         
-        
         while(q.empty() != true)
         {
-            int n = q.size();
+           int n = q.size();
             
-            for(int i=0;i<n;i++)
-            {
-                TreeNode* t = q.front().first;
-                int col = q.front().second;
-                q.pop();
-                
-                mp[col].push_back(t->val);
-                
-                if(t->left != NULL)
-                {
-                    q.push({t->left,col-1});
-                }
-                
-                if(t->right != NULL)
-                {
-                    q.push({t->right,col+1});
-                }
-            }
+           for(int i=0;i<n;i++)
+           {
+               TreeNode* t = q.front().first;
+               int col = q.front().second;
+               q.pop();
+               mp[col].push_back(t->val);
+               
+               if(t->left != NULL)
+               {
+                   q.push({t->left,col-1});
+               }
+               
+               if(t->right != NULL)
+               {
+                   q.push({t->right,col+1});
+               }
+           }
         }
         
         for(auto it : mp)
