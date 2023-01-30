@@ -12,15 +12,15 @@
 class Solution {
 public:
     
-    TreeNode* lca(TreeNode* root,int p,int q)
+    TreeNode* LCA(TreeNode* root,int p,int q)
     {
         if(root == NULL || root->val == p || root->val == q)
         {
             return root;
         }
         
-        TreeNode* x = lca(root->left,p,q);
-        TreeNode* y = lca(root->right,p,q);
+        TreeNode* x = LCA(root->left,p,q);
+        TreeNode* y = LCA(root->right,p,q);
         
         if(x != NULL && y != NULL)
         {
@@ -39,15 +39,15 @@ public:
     }
     int findDistance(TreeNode* root, int p, int q) {
         
+        TreeNode* lca = LCA(root,p,q); 
+        
         queue<TreeNode*>Q;
         
-        TreeNode* LCA = lca(root,p,q);
-        
-        Q.push(LCA);
+        Q.push(lca);
         
         int a = -1,b = -1,level = 0;
         
-        while(Q.empty() != true)
+        while(!Q.empty())
         {
             int n = Q.size();
             
@@ -66,10 +66,10 @@ public:
                     b = level;
                 }
                 
-                if(curr->left != NULL)
-                {
-                    Q.push(curr->left);
-                }
+               if(curr->left != NULL)
+               {
+                   Q.push(curr->left);
+               }
                 
                 if(curr->right != NULL)
                 {
