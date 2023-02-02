@@ -12,7 +12,7 @@
 class Solution {
 public:
     
-    void Parent(TreeNode* root,unordered_map<TreeNode*,TreeNode*>& parent)
+    void Parent(TreeNode* root,unordered_map<TreeNode*,TreeNode*>&parent)
     {
         if(root == NULL)
         {
@@ -29,22 +29,21 @@ public:
             
             for(int i=0;i<n;i++)
             {
-              TreeNode* curr = q.front();
-              q.pop();
-            
-               if(curr->left != NULL)
-              {
-                parent[curr->left] = curr;
-                q.push(curr->left);
-              }
-            
-               if(curr->right != NULL)
-              {
-                parent[curr->right] = curr;
-                q.push(curr->right);
-              }     
+                TreeNode* curr = q.front();
+                q.pop();
+                
+                if(curr->left != NULL)
+                {
+                    parent[curr->left] = curr;
+                    q.push(curr->left);
+                }
+                
+                if(curr->right != NULL)
+                {
+                    parent[curr->right] = curr;
+                    q.push(curr->right);
+                }
             }
-           
         }
     }
     int sumEvenGrandparent(TreeNode* root) {
@@ -55,9 +54,9 @@ public:
         
         queue<TreeNode*>q;
         
-        int sum = 0;
-        
         q.push(root);
+        
+        int sum = 0;
         
         while(q.empty() != true)
         {
