@@ -3,7 +3,7 @@ public:
     int minimumLength(string s) {
         
         int i=0,j=s.size()-1;
-         
+        
         while(i < j)
         {
             int c = s[i];
@@ -15,10 +15,10 @@ public:
             
             else
             {
-               while(i < s.size() && s[i] == c)
-               {
-                   i++;
-               }
+                while(i < s.size() && s[i] == c)
+                {
+                    i++;
+                }
                 
                 while(j >= 0 && s[j] == c)
                 {
