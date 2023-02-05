@@ -1,10 +1,10 @@
 class Solution {
 public:
     string complexNumberMultiply(string num1, string num2) {
-        
+     
         string real1,real2,img1,img2;
         
-        int i = 0;
+        int i=0;
         
         while(num1[i] != '+')
         {
@@ -33,14 +33,14 @@ public:
         
         int x,y;
         
-        x = (r1*r2)-(i1*i2);
-        y = (r1*i2)+(r2*i1);
-        
+        x = (r1*r2) - (i1*i2);
+        y = (r1*i2) + (r2*i1);
         
         string t;
         
         t = to_string(x) + '+' + to_string(y) + 'i';
         
         return t;
+        
     }
 };
