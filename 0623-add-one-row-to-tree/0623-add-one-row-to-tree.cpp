@@ -13,25 +13,25 @@ class Solution {
 public:
     TreeNode* addOneRow(TreeNode* root, int val, int depth) {
         
-        int curr_level = 0;
+        if(depth == 1)
+        {
+            TreeNode* curr = new TreeNode(val);
+            curr->left = root;
+            root = curr;
+            return root;
+        }
         
         queue<TreeNode*>q;
         
         q.push(root);
         
-        if(depth == 1)
-        {
-            TreeNode* res = new TreeNode(val);
-            res->left = root;
-            root = res;
-            return root;
-        }
+        int curr_level = 0;
         
         while(q.empty() != true)
         {
             int n = q.size();
-        
-             curr_level++;
+            
+            curr_level++;
             
             for(int i=0;i<n;i++)
             {
@@ -40,12 +40,12 @@ public:
                 
                 if(curr_level == depth-1)
                 {
-                      TreeNode* res = new TreeNode(val);
-                      res->left = curr->left;
-                      curr->left = res;                        
-                      
-                      TreeNode* ans = new TreeNode(val);
-                      ans->right = curr->right;
+                    TreeNode* res = new TreeNode(val);
+                    res->left = curr->left;
+                    curr->left = res;
+                    
+                    TreeNode* ans = new TreeNode(val);
+                    ans->right = curr->right;
                     curr->right = ans;
                 }
                 
@@ -62,8 +62,6 @@ public:
                     }
                 }
             }
-            
-           
         }
         
         return root;
