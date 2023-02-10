@@ -11,34 +11,38 @@
 class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head) {
+   
+          if(head == NULL || head->next == NULL)
+          {
+             return head;      
+          }
         
-        map<int,int>mp;
+          map<int,int>mp;        
+          
+           ListNode* p = head;
+           
+           ListNode* q = p;
+           
+           while(p != NULL)
+           {
+               mp[p->val]++;
+               p = p->next;
+           }
         
-        if(head == NULL || head->next == NULL)
-        {
-            return head;
-        }
+           ListNode* curr = new ListNode(-1); 
+           p = curr;
+           
+           for(auto it : mp)
+           {
+               if(it.second == 1)
+               {
+                   ListNode* t = new ListNode(it.first);
+                   p->next = t;
+                   p = p->next;      
+               }
+             
+           }
         
-        ListNode* p = head;
-        
-        while(p != NULL)
-        {
-            mp[p->val]++;
-            p = p->next;
-        }
-        
-        ListNode* x = new ListNode(-1);
-        p = x;
-        for(auto it : mp)
-        {
-            if(it.second == 1)
-            {
-                ListNode* curr = new ListNode(it.first);
-                p->next = curr;
-                p = p->next;
-            }
-        }
-        
-        return x->next;
+        return curr->next;
     }
 };
