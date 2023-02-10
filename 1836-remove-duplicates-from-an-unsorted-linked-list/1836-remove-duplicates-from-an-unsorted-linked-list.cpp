@@ -16,35 +16,35 @@ public:
         
         ListNode* p = head;
         
+        ListNode* q = p;
+        
         while(p != NULL)
         {
             mp[p->val]++;
             p = p->next;
         }
         
-        ListNode* ans = new ListNode(-1);
+        ListNode* curr = new ListNode(-1);
+        p = curr;
         
-        ListNode* prev = ans;
+        q = head;
         
-        p = head;
-        
-        while(p != NULL)
+        while(q != NULL)
         {
-            if(mp[p->val] > 1)
+            if(mp[q->val] > 1)
             {
-                p = p->next;
+                q = q->next;
             }
             
             else
             {
-                prev->next = p;
-                prev = prev->next;
+                ListNode* res = new ListNode(q->val);
+                p->next = res;
                 p = p->next;
+                q = q->next;
             }
         }
         
-        prev->next = p;
-        
-        return ans->next;
+        return curr->next;
     }
 };
