@@ -12,30 +12,31 @@
 class Solution {
 public:
     
-    map<char,int>mp1;
-    map<char,int>mp2;
     
-    void helper(Node* root,map<char,int>& mp)
+    
+    void helper(Node* root,map<char,int> &mp)
     {
         if(root == NULL)
         {
             return;
         }
         
-        mp[root->val]++;
+          mp[root->val]++;
         
         if(root->left != NULL)
         {
             helper(root->left,mp);
         }
         
-         if(root->right != NULL)
+        if(root->right != NULL)
         {
             helper(root->right,mp);
         }
-        
     }
     bool checkEquivalence(Node* root1, Node* root2) {
+        
+        map<char,int>mp1;
+        map<char,int>mp2;
         
         helper(root1,mp1);
         helper(root2,mp2);
@@ -48,7 +49,7 @@ public:
             }
         }
         
-          for(auto it : mp2)
+         for(auto it : mp2)
         {
             if(mp1[it.first] != it.second )
             {
