@@ -17,13 +17,13 @@ public:
         {
             ans.push_back(res);
             
-            int a = ans.back();
+            int a = ans[ans.size()-1];
             int b = ans[ans.size()-2];
             
             res = a + b;
         }
         
-        int c = 0 , i = ans.size()-1;
+        int i = ans.size()-1,c=0;
         
         while(k > 0)
         {
