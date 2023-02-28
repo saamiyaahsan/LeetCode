@@ -22,17 +22,15 @@ public:
         string p = helper(root->left,ans,mp);
         string q = helper(root->right,ans,mp);
         
-        string t = to_string(root->val) + "#" + p + "#" + q;
+        string s = to_string(root->val) + "#" + p + "#" + q;
         
-        if(mp[t] == 1)
+        if(mp[s] == 1)
         {
             ans.push_back(root);
         }
         
-       mp[t]++;
-        
-        
-        return t;
+        mp[s]++;
+        return s;
     }
     vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
         
@@ -41,7 +39,7 @@ public:
         
         if(root == NULL)
         {
-           return ans;    
+            return ans;
         }
         
         helper(root,ans,mp);
