@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    
+     
     void solve(string t,string &ans,TreeNode* root)
     {
         if(root == NULL)
