@@ -1,7 +1,7 @@
 class Solution {
-public:
+public: 
     int maxFreq(string s, int maxLetters, int minSize, int maxSize) {
-        
+          
         map<string,int>mp;
         
         for(int i=0;i<=s.size()-minSize;i++)
@@ -11,10 +11,16 @@ public:
         
         int ans = 0;
         
+        set<char>st;
+        
         for(auto it : mp)
         {
-            set<char> subs(begin(it.first),end(it.first));
-            if(subs.size() <= maxLetters)
+            set<char>st;
+            for(int i=0;i<it.first.size();i++)
+            {
+                st.insert(it.first[i]);
+            }
+            if(st.size() <= maxLetters)
             {
                ans = max(ans,it.second);        
             }
