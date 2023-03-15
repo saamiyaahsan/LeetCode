@@ -12,31 +12,27 @@
 class Solution {
 public:
     
-    long long ans = 0;
-    
-    long long helper(TreeNode* root)
+    long long helper(TreeNode* root,int& ans)
     {
-       if(root == NULL)
-       {
-           return 0; 
-       }
+        if(root == NULL)
+        {
+            return 0;
+        }
         
-       long long left = helper(root->left);
-       long long right = helper(root->right);
+        long long left = helper(root->left,ans);
+        long long right = helper(root->right,ans);
         
         if(root->val == left + right)
         {
             ans++;
         }
         
-        return left + right + root->val;
+        return left+right+root->val;
     }
-    
     int equalToDescendants(TreeNode* root) {
         
-       helper(root);
-       
+        int ans = 0;
+        helper(root,ans);
         return ans;
-        
     }
 };
