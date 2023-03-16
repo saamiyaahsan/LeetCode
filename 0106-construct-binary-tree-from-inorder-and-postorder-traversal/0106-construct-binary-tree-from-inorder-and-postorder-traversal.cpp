@@ -14,9 +14,9 @@ public:
     
     int idx;
     
-    int position(vector<int>& inorder,int start,int end,int curr)
+    int position(int start,int end,vector<int>& inorder,int curr)
     {
-        int k = 0;
+        int k;
         
         for(int i=start;i<=end;i++)
         {
@@ -28,6 +28,7 @@ public:
         
         return k;
     }
+    
     TreeNode* helper(vector<int>& inorder,vector<int>& postorder,int start,int end)
     {
         if(start > end)
@@ -36,29 +37,22 @@ public:
         }
         
         int curr = postorder[idx];
-        idx--;
         
-        TreeNode* root = new TreeNode(curr);
+        TreeNode* root = new TreeNode(postorder[idx--]);
         
-        if(start == end)
-        {
-            return root;
-        }
-        
-        int pos = position(inorder,start,end,curr);
+        int pos = position(start,end,inorder,curr);
         
         root->right = helper(inorder,postorder,pos+1,end);
         root->left = helper(inorder,postorder,start,pos-1);
         
         return root;
     }
+    
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
         
-        int n = inorder.size();
+        idx = inorder.size()-1;
         
-        idx = n-1;
-        
-        return helper(inorder,postorder,0,n-1);
+        return helper(inorder,postorder,0,inorder.size()-1);
         
     }
 };
