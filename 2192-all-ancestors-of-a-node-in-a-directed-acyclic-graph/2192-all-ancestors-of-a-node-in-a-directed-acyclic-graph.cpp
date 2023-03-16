@@ -16,7 +16,7 @@ public:
          {
                  int x = q.front();
                  q.pop();
-                 for(auto &it : adj[x])
+                 for(auto it : adj[x])
                 {
                      if(visited[it] == false)
                     {
