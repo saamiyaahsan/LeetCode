@@ -1,15 +1,15 @@
 class Solution {
 public:
     
-    void dfs(int node,vector<int>& vis,vector<vector<int>>&adj)
+    void dfs(int node,vector<int>& visited,vector<vector<int>>& adj)
     {
-        vis[node] = 1;
+        visited[node] = 1;
         
         for(auto it : adj[node])
         {
-            if(!vis[it])
+            if(visited[it] == 0)
             {
-                dfs(it,vis,adj);
+                dfs(it,visited,adj);
             }
         }
     }
@@ -17,9 +17,7 @@ public:
         
         vector<vector<int>>adj(n);
         
-        vector<int>vis(n,0);
-        
-        int cnt = 0;
+        vector<int>visited(n,0);
         
         for(int i=0;i<edges.size();i++)
         {
@@ -27,12 +25,14 @@ public:
             adj[edges[i][1]].push_back(edges[i][0]);
         }
         
-        for(int i=0;i<vis.size();i++)
+        int cnt = 0;
+        
+        for(int i=0;i<n;i++)
         {
-            if(vis[i] == 0)
+            if(visited[i] == 0)
             {
                 cnt++;
-                dfs(i,vis,adj);
+                dfs(i,visited,adj);
             }
         }
         
