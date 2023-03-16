@@ -14,7 +14,11 @@ public:
          
          while(q.empty() != true)
          {
-                 int x = q.front();
+             int n = q.size();
+             
+             for(int i=0;i<n;i++)
+             {
+                int x = q.front();
                  q.pop();
                  for(auto it : adj[x])
                 {
@@ -24,7 +28,8 @@ public:
                        ans[it].push_back(node);
                        q.push(it);
                      }
-                } 
+                }    
+             }
             
          }
         
