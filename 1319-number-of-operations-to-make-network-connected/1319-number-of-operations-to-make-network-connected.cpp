@@ -13,7 +13,6 @@ public:
             }
         }
     }
-    
     int makeConnected(int n, vector<vector<int>>& connections) {
         
         if(connections.size() < n-1)
@@ -25,8 +24,6 @@ public:
         
         vector<int>visited(n,0);
         
-        int cnt = 0;
-        
         for(int i=0;i<connections.size();i++)
         {
             adj[connections[i][0]].push_back(connections[i][1]);
@@ -35,7 +32,9 @@ public:
         
         dfs(adj,0,visited);
         
-        for(int i=0;i<visited.size();i++)
+        int cnt = 0;
+        
+        for(int i=0;i<n;i++)
         {
             if(visited[i] == 0)
             {
@@ -45,6 +44,5 @@ public:
         }
         
         return cnt;
-        
     }
 };
