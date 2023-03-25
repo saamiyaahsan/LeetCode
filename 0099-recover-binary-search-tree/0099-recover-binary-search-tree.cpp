@@ -21,26 +21,39 @@ public:
             return;
         }
         
-        inorder(root->left,res);
+        if(root->left != NULL)
+        {
+            inorder(root->left,res);
+        }
         
         res.push_back(root->val);
         
-        inorder(root->right,res);
+        if(root->right != NULL)
+        {
+            inorder(root->right,res);
+        }
     }
     
-    void helper(TreeNode* root,vector<int>res)
+    void helper(TreeNode* root,vector<int>& res)
     {
         if(root == NULL)
         {
             return;
         }
         
-        helper(root->left,res);
+        if(root->left != NULL)
+        {
+            helper(root->left,res);    
+        }
         
         root->val = res[i++];
         
-        helper(root->right,res);
+        if(root->right != NULL)
+        {
+            helper(root->right,res);
+        }
     }
+    
     void recoverTree(TreeNode* root) {
         
         vector<int>res;
@@ -50,5 +63,7 @@ public:
         sort(res.begin(),res.end());
         
         helper(root,res);
+        
+        
     }
 };
