@@ -1,51 +1,39 @@
 class Solution {
 public:
+    
+    void dfs(vector<vector<int>>& grid,int i,int j,int step,int &cnt)
+    {
+        if(i < 0 || i >= grid.size() || j < 0 || j >= grid[0].size() || grid[i][j] != step + 1)
+        {
+            return;
+        }
+        
+        cnt++;
+        int parent_value = grid[i][j];
+        grid[i][j] =0;
+        
+        dfs(grid,i+2,j+1,parent_value,cnt);
+        dfs(grid,i+2,j-1,parent_value,cnt);
+        dfs(grid,i-2,j+1,parent_value,cnt);
+        dfs(grid,i-2,j-1,parent_value,cnt);
+        dfs(grid,i+1,j+2,parent_value,cnt);
+        dfs(grid,i+1,j-2,parent_value,cnt);
+        dfs(grid,i-1,j-2,parent_value,cnt);
+        dfs(grid,i-1,j+2,parent_value,cnt);
+        
+        //p || q || r || s || a || b || c || d;
+    }
     bool checkValidGrid(vector<vector<int>>& grid) {
         
-        queue<pair<pair<int,int>,int>>q;
+        int cnt = 0,step = -1;
         
-        q.push({{0,0},0});
+        dfs(grid,0,0,step,cnt);
         
-        int n = grid.size(), m = grid[0].size();
-        
-        vector<vector<int>>visited(n,vector<int>(m,0));
-         visited[0][0] = 1;
-        vector<int>drow = {-2,-2,-1,-1,1,1,2,2};
-        vector<int>dcol = {-1,1,2,-2,2,-2,1,-1};
-        
-        while(q.empty() != true)
+        if(cnt == grid.size()*grid[0].size())
         {
-            auto p = q.front();
-            q.pop();
-            int row = p.first.first;
-            int col = p.first.second;
-            int step = p.second;
-            
-            for(int i=0;i<drow.size();i++)
-            {
-                int nrow = row + drow[i];
-                int ncol = col + dcol[i];
-                
-                if(nrow >= 0 && nrow <= grid.size()-1 && ncol >= 0 && ncol <= grid[0].size()-1 && grid[nrow][ncol] == step + 1)
-                {
-                    q.push({{nrow,ncol},step+1});
-                    visited[nrow][ncol] = 1;          
-                }
-                
-            }
+            return true;
         }
         
-        for(int i=0;i<grid.size();i++)
-        {
-            for(int j = 0;j<grid[0].size();j++)
-            {
-                if(visited[i][j] == 0)
-                {
-                    return false;
-                }
-            }
-        }
-        
-        return true;
+        return false;
     }
 };
