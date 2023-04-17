@@ -2,20 +2,22 @@ class Solution {
 public:
     bool makePalindrome(string s) {
         
-        int i,j,cnt=0;
-        
-        i=0;
-        j=s.size()-1;
+        int i=0,j=s.size()-1,cnt = 0;
         
         while(i < j)
         {
             if(s[i] != s[j])
             {
                 cnt++;
+                i++;
+                j--;
             }
             
-            i++;
-            j--;
+            else
+            {
+                i++;
+                j--;
+            }
         }
         
         if(cnt <= 2)
