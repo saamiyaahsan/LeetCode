@@ -21,9 +21,9 @@ public:
         
         queue<TreeNode*>q;
         
-        parent[root] = NULL;
-        
         q.push(root);
+        
+        parent[root] = NULL;
         
         while(q.empty() != true)
         {
@@ -31,7 +31,7 @@ public:
             
             for(int i=0;i<n;i++)
             {
-                auto x = q.front();
+                TreeNode* x = q.front();
                 q.pop();
                 
                 if(x->left != NULL)
@@ -48,20 +48,18 @@ public:
             }
         }
     }
-    
     int findClosestLeaf(TreeNode* root, int k) {
         
         unordered_map<TreeNode*,TreeNode*>parent;
         
-        unordered_map<TreeNode*,bool>visited(false);
-        
         Child_Parent(root,parent);
         
+        unordered_map<TreeNode*,bool>visited(false);
+        
         queue<TreeNode*>q;
+        q.push(root);
         
         queue<pair<TreeNode*,int>>Q;
-        
-        q.push(root);
         
         while(q.empty() != true)
         {
@@ -91,7 +89,7 @@ public:
             }
         }
         
-        int ans = INT_MAX,p = 0;
+        int ans = INT_MAX,p=0;
         
         while(Q.empty() != true)
         {
@@ -102,21 +100,21 @@ public:
                 auto y = Q.front();
                 Q.pop();
                 
-                TreeNode* x = y.first; 
+                TreeNode* x = y.first;
                 int dis = y.second;
+                
                 if(x->val != k)
                 {
                     if(x->left == NULL && x->right == NULL && ans > dis)
                     {
-                        
-                        ans = dis;
                         p = x->val;
+                        ans = dis;
                     }
                     
                     if(x->left != NULL && visited[x->left] == false)
                     {
-                       Q.push({x->left,dis+1});
-                       visited[x->left] = true; 
+                        Q.push({x->left,dis+1});
+                        visited[x->left] = true;
                     }
                     
                     if(x->right != NULL && visited[x->right] == false)
@@ -129,32 +127,35 @@ public:
                     {
                         Q.push({parent[x],dis+1});
                         visited[parent[x]] = true;
+                        
                     }
                 }
                 
                 else
                 {
-                     if(x->left == NULL && x->right == NULL)
-                     {
-                         return x->val;
-                     }
-                     if(x->left != NULL && visited[x->left] == false)
-                     {
-                         Q.push({x->left,dis+1});
-                         visited[x->left] = true;
-                     }
+                    if(x->left == NULL && x->right == NULL)
+                    {
+                        return x->val;
+                    }
                     
-                     if(x->right != NULL && visited[x->right] == false)
-                     {
-                         Q.push({x->right,dis+1});
-                         visited[x->right] = true;
-                     }
+                    if(x->left != NULL && visited[x->left] == false)
+                    {
+                        Q.push({x->left,dis+1});
+                        visited[x->left] = true;
+                    }
                     
-                     if(parent[x] != NULL && visited[parent[x]] == false)
-                     {
-                         Q.push({parent[x],dis+1});
-                         visited[parent[x]] = true;
-                     }
+                    if(x->right != NULL && visited[x->right] == false)
+                    {
+                        Q.push({x->right,dis+1});
+                        visited[x->right] = true;
+                    }
+                    
+                    if(parent[x] != NULL && visited[parent[x]] == false)
+                    {
+                        Q.push({parent[x],dis+1});
+                        visited[parent[x]] = true;
+                        
+                    }
                 }
             }
         }
