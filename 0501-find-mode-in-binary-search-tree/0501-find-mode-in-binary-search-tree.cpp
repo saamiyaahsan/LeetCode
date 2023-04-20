@@ -12,23 +12,23 @@
 class Solution {
 public:
     
-    void inorder(TreeNode* root,unordered_map<int,int>& mp)
+    void helper(TreeNode* root,unordered_map<int,int>& mp)
     {
         if(root == NULL)
         {
             return;
         }
         
+        mp[root->val]++;
+        
         if(root->left != NULL)
         {
-            inorder(root->left,mp);
+            helper(root->left,mp);
         }
-        
-        mp[root->val]++;
         
         if(root->right != NULL)
         {
-            inorder(root->right,mp);
+            helper(root->right,mp);
         }
     }
     
@@ -36,7 +36,9 @@ public:
         
         unordered_map<int,int>mp;
         
-        inorder(root,mp);
+        vector<int>res;
+        
+        helper(root,mp);
         
         int ans = INT_MIN;
         
@@ -45,13 +47,11 @@ public:
             ans = max(ans,it.second);
         }
         
-        vector<int>res;
-        
         for(auto it : mp)
         {
             if(it.second == ans)
             {
-                res.push_back(it.first);
+                res.push_back(it.first); 
             }
         }
         
