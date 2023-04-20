@@ -12,7 +12,7 @@
 class Solution {
 public:
     
-    void Parent(TreeNode* root,unordered_map<TreeNode*,TreeNode*>&parent)
+    void helper(TreeNode* root,unordered_map<TreeNode*,TreeNode*>& parent)
     {
         if(root == NULL)
         {
@@ -20,8 +20,9 @@ public:
         }
         
         queue<TreeNode*>q;
-        
         q.push(root);
+        
+        parent[root] = NULL;
         
         while(q.empty() != true)
         {
@@ -29,19 +30,19 @@ public:
             
             for(int i=0;i<n;i++)
             {
-                TreeNode* curr = q.front();
+                TreeNode* t = q.front();
                 q.pop();
                 
-                if(curr->left != NULL)
+                if(t->left != NULL)
                 {
-                    parent[curr->left] = curr;
-                    q.push(curr->left);
+                    parent[t->left] = t;
+                    q.push(t->left);
                 }
                 
-                if(curr->right != NULL)
+                if(t->right != NULL)
                 {
-                    parent[curr->right] = curr;
-                    q.push(curr->right);
+                    parent[t->right] = t;
+                    q.push(t->right);
                 }
             }
         }
@@ -50,10 +51,9 @@ public:
         
         unordered_map<TreeNode*,TreeNode*>parent;
         
-        Parent(root,parent);
+        helper(root,parent);
         
         queue<TreeNode*>q;
-        
         q.push(root);
         
         int sum = 0;
@@ -64,22 +64,22 @@ public:
             
             for(int i=0;i<n;i++)
             {
-                TreeNode* curr = q.front();
+                TreeNode* t = q.front();
                 q.pop();
                 
-                if(parent[curr] != NULL && parent[parent[curr]] != NULL && parent[parent[curr]]->val % 2 == 0)
+                if(parent[t] != NULL && parent[parent[t]] != NULL && parent[parent[t]]->val % 2 == 0)
                 {
-                    sum = sum + curr->val;
+                    sum = sum + t->val;
                 }
                 
-                if(curr->left != NULL)
+                if(t->left != NULL)
                 {
-                    q.push(curr->left);
+                    q.push(t->left);
                 }
                 
-                if(curr->right != NULL)
+                if(t->right != NULL)
                 {
-                    q.push(curr->right);
+                    q.push(t->right);
                 }
             }
         }
