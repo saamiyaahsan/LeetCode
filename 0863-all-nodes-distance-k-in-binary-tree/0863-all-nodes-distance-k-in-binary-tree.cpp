@@ -10,87 +10,98 @@
 class Solution {
 public:
     
-    void Markparents(TreeNode* root,unordered_map<TreeNode*,TreeNode*>&parents)
+    void child_parent(TreeNode* root,unordered_map<TreeNode*,TreeNode*>& parent)
     {
+        if(root == NULL)
+        {
+            return;
+        }
+        
+        //parent[root] = NULL;
+        
         queue<TreeNode*>q;
         
         q.push(root);
         
         while(q.empty() != true)
         {
-            TreeNode* node = q.front();
-            q.pop();
+            int n = q.size();
             
-            if(node->left != NULL)
+            for(int i=0;i<n;i++)
             {
-                parents[node->left] = node;
-                q.push(node->left);
-            }
-            
-            if(node->right != NULL)
-            {
-                parents[node->right] = node;
-                q.push(node->right);
+                TreeNode* t = q.front();
+                q.pop();
+                
+                if(t->left != NULL)
+                {
+                    parent[t->left] = t;
+                    q.push(t->left);
+                }
+                
+                if(t->right != NULL)
+                {
+                    parent[t->right] = t;
+                    q.push(t->right);
+                }
             }
         }
     }
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
         
-        unordered_map<TreeNode*,TreeNode*>parents;
-        Markparents(root,parents);
+        vector<int>res;
         
-        unordered_map<TreeNode*,bool>visited;
+        unordered_map<TreeNode*,TreeNode*>parent;
+        unordered_map<TreeNode*,bool>visited(false);
+
+        child_parent(root,parent);
         
         queue<TreeNode*>q;
         
         q.push(target);
-        
         visited[target] = true;
         
-        int currLevel = 0;
+        int curr_level = 0;
         
         while(q.empty() != true)
         {
             int n = q.size();
             
-            if(currLevel++ == k)
+            if(curr_level++ == k)
             {
-               break;    
+                break;
             }
             
             for(int i=0;i<n;i++)
             {
-                TreeNode* curr = q.front();
+                auto t = q.front();
                 q.pop();
-                
-                if(curr->left != NULL && visited[curr->left] == false)
+              
+                if(t->left != NULL &&  visited[t->left] == false)
                 {
-                    visited[curr->left] = true;
-                    q.push(curr->left);
+                    visited[t->left] = true;
+                    q.push(t->left);
                 }
                 
-                if(curr->right != NULL && visited[curr->right] == false)
+                if(t->right != NULL && visited[t->right] == false)
                 {
-                    visited[curr->right] = true;
-                    q.push(curr->right);
+                    visited[t->right] = true;
+                    q.push(t->right);
                 }
                 
-                if(parents[curr] != NULL && visited[parents[curr]] == false)
+                if(parent[t] != NULL && visited[parent[t]] == false)
                 {
-                    visited[parents[curr]] = true;
-                    q.push(parents[curr]);
+                    visited[parent[t]] = true;
+                    q.push(parent[t]);
                 }
             }
         }
         
-        vector<int>res;
-        
         while(q.empty() != true)
         {
-            TreeNode* p = q.front();
+            auto p = q.front();
+            q.pop();
             
             res.push_back(p->val);
-            q.pop();
         }
         
         return res;
