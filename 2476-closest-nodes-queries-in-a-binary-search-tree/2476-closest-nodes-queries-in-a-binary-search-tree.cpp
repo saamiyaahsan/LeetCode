@@ -31,79 +31,78 @@ public:
         }
     }
     
-    int findmax(vector<int>& res,int num)
+    int min_helper(vector<int>& res,int num)
     {
-        int i = 0,j = res.size()-1,k = -1;
+        int i = 0,j = res.size()-1,ans = -1;
         
         while(i <= j)
         {
-            int mid = (i+j)/2;
+            int mid = (i + j)/2;
             
-            if(res[mid] > num)
+            if(res[mid] == num)
             {
-                k = res[mid];
-                j = mid-1;
+                return num;
             }
             
-            else if(res[mid] == num)
+            else if(res[mid] < num)
             {
-                return res[mid];
+                ans = res[mid];
+                i = mid + 1;
             }
             
             else
             {
-                i = mid + 1;
+                j = mid-1;
             }
         }
         
-        return k;
+        return ans;
     }
     
-    int findmin(vector<int>& res,int num)
+    int max_helper(vector<int>& res,int num)
     {
-        int i = 0,j = res.size()-1,k = -1;
+        int i = 0,j = res.size()-1,ans = -1;
         
         while(i <= j)
         {
             int mid = (i+j)/2;
             
-            if(res[mid] < num)
+            if(res[mid] == num)
             {
-                k = res[mid];
-                i = mid + 1;
+                return num;
             }
             
-            else if(res[mid] == num)
+            else if(res[mid] > num)
             {
-                return res[mid];
+                ans = res[mid];
+                j = mid - 1;
             }
             
             else
             {
-                j = mid-1;
+                i = mid + 1;
             }
         }
         
-        return k;
+        return ans;
     }
     vector<vector<int>> closestNodes(TreeNode* root, vector<int>& queries) {
         
-         vector<int>res;
-         inorder(root,res);
-         
-         vector<vector<int>>ans;
-          
-         for(int i=0;i<queries.size();i++)
-         {
-            vector<int>p;
-            
-             int x = findmin(res,queries[i]);
-             int y = findmax(res,queries[i]);
-             p.push_back(x);
-             p.push_back(y);
-             ans.push_back(p);
-             p.clear();
-         }
+        vector<vector<int>>ans;
+        vector<int>arr;
+        vector<int>res;
+        
+        inorder(root,res);
+        
+        for(int i=0;i<queries.size();i++)
+        {
+            int mx = min_helper(res,queries[i]);
+            int mn = max_helper(res,queries[i]);
+            arr.push_back(mx);
+            arr.push_back(mn);
+            ans.push_back(arr);
+            arr.clear();
+        }
         
         return ans;
     }
