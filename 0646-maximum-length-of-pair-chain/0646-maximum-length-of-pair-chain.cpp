@@ -1,33 +1,31 @@
 class Solution {
 public:
-    
-    static bool comp(vector<int>& a ,vector<int>& b)
-    {
-        if(a[1] < b[1])
-        {
-            return true;
-        }
-        
-        return false;
-    }
-    
     int findLongestChain(vector<vector<int>>& pairs) {
         
-        sort(pairs.begin(),pairs.end(),comp);
-        
-        int p = pairs[0][1];
-        
-        int c = 1;
-        
-        for(int i=1;i<pairs.size();i++)
+        for(int i=0;i<pairs.size();i++)
         {
-            if(pairs[i][0] > p)
-            {
-                p = pairs[i][1];
-                c++;
-            }
+            swap(pairs[i][0],pairs[i][1]);    
         }
         
-        return c;
+        sort(pairs.begin(),pairs.end());
+        
+        for(int i=0;i<pairs.size();i++)
+        {
+            swap(pairs[i][0],pairs[i][1]);    
+        }
+        
+        int i=0,cnt = 1;
+        
+        for(int j=1;j<pairs.size();j++)
+        {
+            if(pairs[i][1] < pairs[j][0])
+            {
+                cnt++;
+                i = j;
+            }
+            
+        }
+        
+        return cnt;
     }
 };
