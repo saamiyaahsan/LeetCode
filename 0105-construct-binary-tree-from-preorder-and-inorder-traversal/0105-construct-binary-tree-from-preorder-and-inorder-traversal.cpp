@@ -14,15 +14,16 @@ public:
     
     int idx = 0;
     
-    int position(vector<int>& inorder,int start,int end,int curr)
+    int position(int start,int end,vector<int>& preorder,vector<int>& inorder,int curr)
     {
-        int k = 0;
+        int k = -1;
         
         for(int i=start;i<=end;i++)
         {
             if(inorder[i] == curr)
             {
                 k = i;
+                break;
             }
         }
         
@@ -35,27 +36,21 @@ public:
             return NULL;
         }
         
-        int curr = preorder[idx];
-        idx++;
-        TreeNode* root = new TreeNode(curr);
+         int curr = preorder[idx];
+    
+        TreeNode* root = new TreeNode(preorder[idx++]);
         
-        if(start == end)
-        {
-            return root;
-        }    
-        
-        int pos = position(inorder,start,end,curr); 
+        int pos = position(start,end,preorder,inorder,curr);
         
         root->left = helper(preorder,inorder,start,pos-1);
         root->right = helper(preorder,inorder,pos+1,end);
         
         return root;
     }
+    
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
         
-        int n = preorder.size();
-        
-        return helper(preorder,inorder,0,n-1);
+        return helper(preorder,inorder,0,preorder.size()-1);
         
     }
 };
