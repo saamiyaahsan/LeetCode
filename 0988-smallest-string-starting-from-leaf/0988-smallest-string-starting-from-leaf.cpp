@@ -11,32 +11,41 @@
  */
 class Solution {
 public:
-     
-    void solve(string t,string &ans,TreeNode* root)
+    
+    void dfs(TreeNode* root,unordered_map<int,char>& mp,string t,vector<string>& ans)
     {
         if(root == NULL)
         {
             return;
         }
         
-        t = (char)(root->val + 'a') + t;
+        t = t + mp[root->val];
         
-          solve(t,ans,root->left);
-        solve(t,ans,root->right);
-        
-        if((ans == "" || t < ans ) && (root->left == NULL) && (root->right == NULL))
+        if(root->left == NULL && root->right == NULL)
         {
-            ans = t;
+            reverse(t.begin(),t.end());
+            ans.push_back(t);
         }
-         
+        
+        dfs(root->left,mp,t,ans);
+        dfs(root->right,mp,t,ans);
     }
     string smallestFromLeaf(TreeNode* root) {
-       
-         string ans = "";
-         string t = "";
-         
-         solve(t,ans,root);
-         
-        return ans;
+        
+        unordered_map<int,char>mp;
+        
+        vector<string>ans;
+        string t;
+      
+        for(int i=0;i<=25;i++)
+        {
+            mp[i] = 97+i;
+        }
+            
+        dfs(root,mp,t,ans);
+        
+        sort(ans.begin(),ans.end());
+        
+        return ans[0];
     }
 };
