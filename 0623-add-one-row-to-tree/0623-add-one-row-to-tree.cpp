@@ -11,55 +11,112 @@
  */
 class Solution {
 public:
-    TreeNode* addOneRow(TreeNode* root, int val, int depth) {
-        
-        if(depth == 1)
+    
+    void child_parent(TreeNode* root,unordered_map<TreeNode*,int>& level)
+    {
+        if(root == NULL)
         {
-            TreeNode* curr = new TreeNode(val);
-            curr->left = root;
-            root = curr;
-            return root;
+            return;
         }
         
-        queue<TreeNode*>q;
+        queue<pair<TreeNode*,int>>q;
+        q.push({root,1});
         
-        q.push(root);
-        
-        int curr_level = 0;
+        level[root] = 1;
         
         while(q.empty() != true)
         {
             int n = q.size();
             
-            curr_level++;
+            for(int i=0;i<n;i++)
+            {
+                auto x = q.front();
+                q.pop();
+                
+                TreeNode* t = x.first;
+                int lvl = x.second;
+                
+                if(t->left != NULL)
+                {
+                    q.push({t->left,lvl+1});
+                    level[t->left] = lvl + 1;
+                }
+                
+                if(t->right != NULL)
+                {
+                    q.push({t->right,lvl+1});
+                    level[t->right] = lvl + 1;
+                }
+            }
+        }
+    }
+    
+    TreeNode* addOneRow(TreeNode* root, int val, int depth) {
+        
+        unordered_map<TreeNode*,int>level;
+        
+        child_parent(root,level);
+        
+        if(depth == 1)
+        {
+            TreeNode* newRoot = new TreeNode(val);
+            newRoot->left = root;
+            newRoot->right = NULL;
+            
+            return newRoot;
+        }
+        
+        queue<TreeNode*>q;
+        q.push(root);
+        
+        while(q.empty() != true)
+        {
+            int n = q.size();
             
             for(int i=0;i<n;i++)
             {
-                TreeNode* curr = q.front();
+                TreeNode* t = q.front();
                 q.pop();
                 
-                if(curr_level == depth-1)
-                {
-                    TreeNode* res = new TreeNode(val);
-                    res->left = curr->left;
-                    curr->left = res;
+                if(level[t] == depth-1)
+                { 
+                    if(t->left != NULL)
+                    {
+                        TreeNode* x = new TreeNode(val);
+                        x->left = t->left;
+                        t->left = x;
+                    }
                     
-                    TreeNode* ans = new TreeNode(val);
-                    ans->right = curr->right;
-                    curr->right = ans;
+                    else
+                    {
+                       TreeNode* x = new TreeNode(val);
+                       t->left = x;
+                       x->left = NULL; 
+                    }
+                    
+                    if(t->right != NULL)
+                    {
+                        TreeNode* y = new TreeNode(val);
+                        y->right = t->right;
+                        t->right = y;
+                    }
+                    
+                    else
+                    {
+                       TreeNode* y = new TreeNode(val);
+                       t->right = y;
+                       y->right = NULL; 
+                    }
                 }
                 
-                else
+                if(t->left != NULL)
                 {
-                    if(curr->left != NULL)
-                    {
-                        q.push(curr->left);
-                    }
-                    
-                    if(curr->right != NULL)
-                    {
-                        q.push(curr->right);
-                    }
+                    q.push(t->left);
+                }
+                
+                if(t->right != NULL)
+                {
+                    q.push(t->right);
                 }
             }
         }
