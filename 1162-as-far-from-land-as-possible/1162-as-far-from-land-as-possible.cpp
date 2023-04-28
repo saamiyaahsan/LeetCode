@@ -1,12 +1,10 @@
 class Solution {
 public:
     int maxDistance(vector<vector<int>>& grid) {
-         
+        
         queue<pair<pair<int,int>,int>>q;
         
-        int visited[grid.size()][grid[0].size()];
-        
-        int cnt = 0;
+        int cntZero = 0,cntOne = 0;
         
         for(int i=0;i<grid.size();i++)
         {
@@ -14,19 +12,18 @@ public:
             {
                 if(grid[i][j] == 1)
                 {
-                   cnt++; 
-                   q.push({{i,j},0});
-                   visited[i][j] = 1; 
+                    q.push({{i,j},0});
+                    cntOne++;
                 }
                 
                 else
                 {
-                    visited[i][j] = -1;
+                    cntZero++;
                 }
             }
         }
         
-        int ans = 0;
+        int ans = INT_MIN;
         
         vector<int>drow = {-1,0,1,0};
         vector<int>dcol = {0,1,0,-1};
@@ -36,31 +33,33 @@ public:
             
             for(int i=0;i<n;i++)
             {
-                auto p = q.front();
+                auto x = q.front();
                 q.pop();
                 
-                int row = p.first.first;
-                int col = p.first.second;
-                int dist = p.second;
+                int row = x.first.first;
+                int col = x.first.second;
+                int dist = x.second;
                 ans = max(ans,dist);
-                for(int i=0;i<drow.size();i++)
+                
+                for(int j=0;j<drow.size();j++)
                 {
-                    int nrow = drow[i] + row;
-                    int ncol = dcol[i] + col;
+                    int nrow = row + drow[j];
+                    int ncol = col + dcol[j];
                     
                     if(nrow >= 0 && nrow <= grid.size()-1 && ncol >= 0 && ncol <= grid[0].size()-1 && grid[nrow][ncol] == 0)
                     {
-                        q.push({{nrow,ncol},dist + 1});
                         grid[nrow][ncol] = 1;
+                        q.push({{nrow,ncol},dist+1});
                     }
                 }
             }
         }
         
-        if(cnt == (grid.size()*grid[0].size()) || cnt == 0)
+        if(cntZero == 0 || cntOne == 0)
         {
-            return -1;
+           return -1;    
         }
+        
         return ans;
     }
 };
