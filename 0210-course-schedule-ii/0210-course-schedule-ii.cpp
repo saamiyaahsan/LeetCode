@@ -2,11 +2,10 @@ class Solution {
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
         
-       int n = numCourses;
+        vector<int>res;
         
-        vector<vector<int>>adj(n);
-        
-        vector<int>indegree(n,0);
+        vector<int>indegree(numCourses,0);
+        vector<vector<int>>adj(numCourses);
         
         for(int i=0;i<prerequisites.size();i++)
         {
@@ -14,45 +13,43 @@ public:
             indegree[prerequisites[i][0]]++;
         }
         
-         queue<int>q;
+        queue<int>q;
         
-         for(int i=0;i<indegree.size();i++)
-         {
-             if(indegree[i] == 0)
-             {
-                 q.push(i);
-             }
-         }
+        int cnt = 0;
         
-         int cnt = 0;
-         
-         vector<int>res;
-         
-         while(q.empty() != true)
-         {
-             int x = q.front();
-             q.pop();
-             cnt++;
-             
-             res.push_back(x);
-             
-             for(auto it : adj[x])
-             {
-                 indegree[it]--;
-                 
-                 if(indegree[it] == 0)
-                 {
-                     q.push(it);
-                 }
-             }
-         }
-        
-        if(cnt == n)
+        for(int i=0;i<indegree.size();i++)
         {
+            if(indegree[i] == 0)
+            {
+                q.push(i);
+            }
+        }
+        
+        while(q.empty() != true)
+        {
+            int x = q.front();
+            q.pop();
+            
+            cnt++;
+            res.push_back(x);
+            
+            for(auto it : adj[x])
+            {
+                indegree[it]--;
+                
+                if(indegree[it] == 0)
+                {
+                    q.push(it);
+                }
+            }
+        }
+        
+        if(cnt != numCourses)
+        {
+            res.clear();
             return res;
         }
         
-        res.clear();
         return res;
     }
 };
