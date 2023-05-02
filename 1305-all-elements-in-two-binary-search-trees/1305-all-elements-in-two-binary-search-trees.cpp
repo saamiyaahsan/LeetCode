@@ -12,9 +12,9 @@
 class Solution {
 public:
     
-    vector<int> res;
+    vector<int>res;
     
-    void inOrder(TreeNode* root)
+    void inorder(TreeNode* root,vector<int>& res) 
     {
         if(root == NULL)
         {
@@ -23,21 +23,20 @@ public:
         
         if(root->left != NULL)
         {
-            inOrder(root->left);
+            inorder(root->left,res);
         }
         
         res.push_back(root->val);
         
         if(root->right != NULL)
         {
-            inOrder(root->right);
+            inorder(root->right,res);
         }
     }
- 
     vector<int> getAllElements(TreeNode* root1, TreeNode* root2) {
         
-        inOrder(root1);
-        inOrder(root2);
+        inorder(root1,res);
+        inorder(root2,res);
         
         sort(res.begin(),res.end());
         
