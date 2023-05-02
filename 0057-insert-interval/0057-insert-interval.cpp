@@ -2,30 +2,31 @@ class Solution {
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
         
-        vector<vector<int>>ans;
-        
         intervals.push_back(newInterval);
         
+        if(intervals.size() == 1)
+        {
+            return intervals;
+        }
         sort(intervals.begin(),intervals.end());
         
-        int j=0;
+        vector<vector<int>>output;
         
-        ans.push_back(intervals[0]);
+        output.push_back(intervals[0]);
         
-        for(int i=1;i<intervals.size();i++)
+        for(int j=1;j<intervals.size();j++)
         {
-            if(intervals[i][0] <= ans[j][1])
+            if(output.back()[1] >= intervals[j][0])
             {
-                ans[j][1] = max(intervals[i][1],ans[j][1]);
+                output.back()[1] = max(output.back()[1],intervals[j][1]);
             }
             
             else
             {
-                ans.push_back(intervals[i]);
-                j++;
+                output.push_back(intervals[j]);
             }
         }
         
-        return ans;
+        return output;
     }
 };
