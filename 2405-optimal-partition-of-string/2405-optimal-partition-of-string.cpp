@@ -8,13 +8,18 @@ public:
         
         for(int i=0;i<s.size();i++)
         {
-            if(mp[s[i]] > 0)
+            if(mp.find(s[i]) == mp.end())
+            {
+                mp[s[i]]++;
+            }
+            
+            else
             {
                 cnt++;
                 mp.clear();
+                mp[s[i]]++;
             }
-            
-            mp[s[i]]++;
+           
         }
         
         return cnt;
