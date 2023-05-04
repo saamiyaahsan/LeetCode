@@ -1,31 +1,33 @@
 class Solution {
 public:
     
-    void helper(vector<vector<int>>& graph,int source,vector<int>curr_path,vector<vector<int>>& path,int target)
+    void helper(vector<vector<int>>& graph,int source,int target,vector<vector<int>>& ans,vector<int>res)
     {
-        curr_path.push_back(source);
+        //visited[source] = 1;
+        
+        res.push_back(source);
         
         if(source == target)
         {
-            path.push_back(curr_path);
+            ans.push_back(res);
             return;
         }
         
         for(auto it : graph[source])
         {
-            helper(graph,it,curr_path,path,target);
+             helper(graph,it,target,ans,res);
         }
+        
+        //visited[source] = 0;
     }
-    
     vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
-     
-        vector<int>curr_path;
-        vector<vector<int>>path;
         
-        int n = graph.size();
+        vector<vector<int>>ans;
+        vector<int>visited(graph.size(),0);
+        vector<int>res;
         
-        helper(graph,0,curr_path,path,n-1);
+        helper(graph,0,graph.size()-1,ans,res);
         
-        return path;
+        return ans;
     }
 };
