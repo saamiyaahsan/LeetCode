@@ -3,7 +3,7 @@ public:
     
     void helper(int n,int k,vector<int>res,set<vector<int>>& ans,int cnt,int num) 
     {
-        if(cnt > k || num > n)
+        if(cnt > k)
         {
             return;
         }
