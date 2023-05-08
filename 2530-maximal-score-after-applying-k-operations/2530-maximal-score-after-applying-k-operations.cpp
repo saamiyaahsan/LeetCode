@@ -2,30 +2,28 @@ class Solution {
 public:
     long long maxKelements(vector<int>& nums, int k) {
         
-        priority_queue<int>pq;
+            priority_queue<int>pq;
+           
+           long long sum = 0;
+           
+           for(int i=0;i<nums.size();i++)
+           {
+               pq.push(nums[i]);
+           }
+           
+           while(pq.empty() != true && k != 0)
+           {
+               long long x = pq.top();
+               pq.pop();
+               k--;
+               sum = sum + x;
+               
+               long double y = x;
+                y = ceil(y/3);
+                x = y;
+               pq.push(x);
+           }
         
-        for(int i=0;i<nums.size();i++)
-        {
-            pq.push(nums[i]);
-        }
-        
-        long long sum = 0;
-        
-        while(pq.empty() != true && k>0)
-        {
-            long long res = pq.top();
-            pq.pop();
-            
-            sum = sum + res;
-            
-            long double y = res;
-            y = ceil(y/3);
-            res = y;
-            
-            pq.push(res);
-            k--;
-        }
-        
-        return sum;
+           return sum;
     }
 };
