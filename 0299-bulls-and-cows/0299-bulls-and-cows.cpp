@@ -2,10 +2,12 @@ class Solution {
 public:
     string getHint(string secret, string guess) {
         
-        int cnt = 0;
+        string ans = "";
         
-        map<int,int>mp1;
-        map<int,int>mp2;
+        unordered_map<char,int>m1;
+        unordered_map<char,int>m2;
+        
+        int cnt = 0,CNT = 0;
         
         for(int i=0;i<secret.size();i++)
         {
@@ -16,24 +18,20 @@ public:
             
             else
             {
-                mp1[secret[i]-'0']++;
-                mp2[guess[i]-'0']++;
+                m1[secret[i]]++;
+                m2[guess[i]]++;
             }
         }
         
-        int c = 0;
-        
-        for(auto it : mp1)
+        for(auto it : m2)
         {
-            if(mp2.find(it.first) != mp2.end())
-            {
-                c = c + min(it.second,mp2[it.first]);
-            }
+           if(m1.find(it.first) != m1.end())
+           {
+               CNT = CNT + min(m1[it.first],it.second);
+           }
         }
         
-        string ans = "";
-        
-        ans = to_string(cnt) + "A" + to_string(c) + "B";
+        ans = to_string(cnt) + 'A' + to_string(CNT) + 'B';
         
         return ans;
     }
