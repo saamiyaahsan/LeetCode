@@ -1,46 +1,120 @@
 class Solution {
 public:
     string complexNumberMultiply(string num1, string num2) {
-     
-        string real1,real2,img1,img2;
         
-        int i=0;
+        bool S = false,T = false;
         
-        while(num1[i] != '+')
+        string x = "";
+        string y = "";
+        string v = "";
+        string w = "";
+        
+        int p,q;
+        
+        for(int i = 0;i<num1.size();i++)
         {
-            real1 = real1 + num1[i];
-            i++;
+            if(i == 0 && num1[i] == '-'|| num1[i] >= '0' && num1[i] <= '9')
+            {
+                x.push_back(num1[i]);
+            }
+            
+            else
+            {
+                p = i;
+                break;
+            }
         }
         
-        img1 = num1.substr(i+1,num1.size()-2);
-        
-        i = 0;
-        
-        while(num2[i] != '+')
+        for(int i = 0;i<num2.size();i++)
         {
-            real2 = real2 + num2[i];
-            i++;
+            if(i == 0 && num2[i] == '-' || num2[i] >= '0' && num2[i] <= '9')
+            {
+                y.push_back(num2[i]);
+            }
+            
+            else
+            {
+                q = i;
+                break;
+            }
         }
         
-        img2 = num2.substr(i+1,num2.size()-2);
         
-        int r1,r2,i1,i2;
+        int N1,N2,N3,N4;
         
-        r1 = stoi(real1);
-        r2 = stoi(real2);
-        i1 = stoi(img1);
-        i2 = stoi(img2);
+        N1 = stoi(x);
+        N2 = stoi(y);
         
-        int x,y;
+      
         
-        x = (r1*r2) - (i1*i2);
-        y = (r1*i2) + (r2*i1);
+        for(int i=p+1;i<num1.size();i++)
+        {   
+//             if(num1[i] == '+')
+//             {
+//                 continue;
+//             }
+            
+//             if(num1[i] == '-')
+//             {
+//                 S = true;
+//             }
+            
+            if(num1[i] >= '0' && num1[i] <= '9' || num1[i] == '-')
+            {
+                v.push_back(num1[i]);
+            }
+            
+            else
+            {
+                break;
+            }
+        }
         
-        string t;
+        for(int i=q+1;i<num2.size();i++)
+        {
+//             if(num2[i] == '+')
+//             {
+//                 continue;
+//             }
+            
+//             if(num2[i] == '-')
+//             {
+//                 T = true;
+//             }
+            
+            if(num2[i] >= '0' && num2[i] <= '9' || num2[i] == '-')
+            {
+                w.push_back(num2[i]);
+            }
+            
+            else
+            {
+                break;
+            }
+        }
         
-        t = to_string(x) + '+' + to_string(y) + 'i';
+             
+        N3 = stoi(v);
+        N4 = stoi(w);
         
-        return t;
+        if(S == true)
+        {
+            N3 = -N3;
+        }
         
+        if(T == true)
+        {
+            N4 = -N4;
+        }
+        
+           // return x;
+        int a,b,c,d;
+        
+        a = N1*N2 - (N3*N4);
+        b = N1*N4 + N2*N3;
+        
+        string ans = to_string(a) + '+' + to_string(b) +'i';       
+        
+        return ans;
     }
 };
