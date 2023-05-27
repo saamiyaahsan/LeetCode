@@ -8,12 +8,11 @@ public:
         {
             sum = sum + nums[i];
             ans = max(ans,sum);
+            
             if(sum < 0)
             {
-                ans = max(ans,sum);
                 sum = 0;
             }
-        
         }
         
         return ans;
