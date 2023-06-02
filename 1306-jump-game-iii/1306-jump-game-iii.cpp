@@ -10,23 +10,20 @@ public:
             return true;
         }
         
+        bool p = false;
+        bool q = false;
+        
         if(ind + arr[ind] < arr.size() && visited[ind + arr[ind]] == 0)
         {
-            if(func(arr,ind + arr[ind],visited) == true)
-            {
-                return true;
-            }
+            p = func(arr,ind + arr[ind],visited);
         }
         
          if(ind - arr[ind] < arr.size() && visited[ind - arr[ind]] == 0)
         {
-            if(func(arr,ind - arr[ind],visited) == true)
-            {
-                return true;
-            }
+            q = func(arr,ind - arr[ind],visited);
         }
         
-        return false;
+        return p || q;
     }
     bool canReach(vector<int>& arr, int start) {
         
