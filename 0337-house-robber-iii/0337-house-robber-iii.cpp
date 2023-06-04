@@ -33,12 +33,10 @@ public:
         
         if(root->right != NULL)
         {
-            ans_including_root = ans_including_root + helper(root->right->left,mp) + helper(root->right->right,mp);
+             ans_including_root = ans_including_root + helper(root->right->left,mp) + helper(root->right->right,mp);
         }
         
-        int ans_excluding_root;
-        
-        ans_excluding_root = helper(root->left,mp) + helper(root->right,mp);
+        int ans_excluding_root = helper(root->left,mp) + helper(root->right,mp);
         
         int ans;
         
