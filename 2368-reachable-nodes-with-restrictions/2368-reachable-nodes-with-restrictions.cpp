@@ -1,26 +1,34 @@
 class Solution {
 public:
     
-   void dfs(vector<vector<int>>& adj,int node,vector<int>& visited,int & cnt)
+    int p = 0;
+    
+    int helper(vector<vector<int>>& adj,int node,vector<int>& visited,unordered_map<int,int>& mp)
     {
         visited[node] = 1;
         
-        cnt++;
+        p = 1;
         
-           for(auto it : adj[node])
+        for(auto it : adj[node])
+        {
+            if(visited[it] == 0)
             {
-               if(visited[it] == 0)
-               {
-                   dfs(adj,it,visited,cnt);    
-               }
-               
+                if(mp.find(it) == mp.end())
+                {
+                  p = p + helper(adj,it,visited,mp);
+                }       
             }
+         }
         
+        return p;
     }
-    
     int reachableNodes(int n, vector<vector<int>>& edges, vector<int>& restricted) {
         
         vector<vector<int>>adj(n);
+        
+        unordered_map<int,int>mp;
+        
+        vector<int>visited(n,0);
         
         for(int i=0;i<edges.size();i++)
         {
@@ -28,17 +36,12 @@ public:
             adj[edges[i][1]].push_back(edges[i][0]);
         }
         
-        vector<int>visited(n,0);
-        
-        for(auto it : restricted)
+        for(int i=0;i<restricted.size();i++)
         {
-            visited[it] = 1;        
+            mp[restricted[i]] = 0;    
         }
         
-        int cnt = 0;
+        return helper(adj,0,visited,mp);
         
-        dfs(adj,0,visited,cnt);
-        
-        return cnt;
     }
 };
