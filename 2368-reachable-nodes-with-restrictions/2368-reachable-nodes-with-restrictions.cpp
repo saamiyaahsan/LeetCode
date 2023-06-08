@@ -1,34 +1,14 @@
 class Solution {
 public:
-    
-    int p = 0;
-    
-    int helper(vector<vector<int>>& adj,int node,vector<int>& visited,unordered_map<int,int>& mp)
-    {
-        visited[node] = 1;
-        
-        p = 1;
-        
-        for(auto it : adj[node])
-        {
-            if(visited[it] == 0)
-            {
-                if(mp.find(it) == mp.end())
-                {
-                  p = p + helper(adj,it,visited,mp);
-                }       
-            }
-         }
-        
-        return p;
-    }
     int reachableNodes(int n, vector<vector<int>>& edges, vector<int>& restricted) {
+       
+        queue<int>q;
         
-        vector<vector<int>>adj(n);
+        vector<int>visited(n,0);
         
         unordered_map<int,int>mp;
         
-        vector<int>visited(n,0);
+        vector<vector<int>>adj(n);
         
         for(int i=0;i<edges.size();i++)
         {
@@ -38,10 +18,35 @@ public:
         
         for(int i=0;i<restricted.size();i++)
         {
-            mp[restricted[i]] = 1;    
+            mp[restricted[i]] = 1;
         }
         
-        return helper(adj,0,visited,mp);
+        int ans = 1;
         
+        visited[0] = 1;
+        
+        q.push(0);
+        
+        while(q.empty() != true)
+        {
+            int node = q.front();
+            q.pop();
+            
+            for(auto it : adj[node])
+            {
+                if(visited[it] == 0)
+                {
+                    if(mp.find(it) == mp.end())
+                    {
+                      visited[it] = 1;   
+                      ans++;
+                      q.push(it);
+                    }     
+                }
+               
+            }
+        }
+        
+        return ans;
     }
 };
