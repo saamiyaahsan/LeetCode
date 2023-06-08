@@ -38,7 +38,7 @@ public:
         
         for(int i=0;i<restricted.size();i++)
         {
-            mp[restricted[i]] = 0;    
+            mp[restricted[i]] = 1;    
         }
         
         return helper(adj,0,visited,mp);
