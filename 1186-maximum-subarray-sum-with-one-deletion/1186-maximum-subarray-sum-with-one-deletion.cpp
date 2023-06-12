@@ -26,17 +26,16 @@ public:
     }
     
     int maximumSum(vector<int>& arr) {
-        
-        int ans = INT_MIN;
-        
+         
         vector<vector<int>>dp(arr.size(),vector<int>(2,-1));
+         
+         int ans = INT_MIN;
+         
+         for(int i=0;i<arr.size();i++)
+         {
+            ans = max(ans,helper(arr,i,1,dp));      
+         }
         
-        for(int i=0;i<arr.size();i++) 
-        {
-          ans = max(ans,helper(arr,i,1,dp));   
-        }
-        
-        return ans;
-        
+         return ans;
     }
 };
