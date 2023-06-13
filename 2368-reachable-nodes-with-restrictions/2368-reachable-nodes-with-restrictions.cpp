@@ -1,14 +1,16 @@
 class Solution {
 public:
     int reachableNodes(int n, vector<vector<int>>& edges, vector<int>& restricted) {
-       
-        queue<int>q;
         
-        vector<int>visited(n,0);
+        vector<vector<int>>adj(n);
         
         unordered_map<int,int>mp;
         
-        vector<vector<int>>adj(n);
+        vector<int>visited(n,0);
+        
+        queue<int>q;
+        
+        int cnt = 0;
         
         for(int i=0;i<edges.size();i++)
         {
@@ -21,32 +23,26 @@ public:
             mp[restricted[i]] = 1;
         }
         
-        int ans = 1;
-        
-        visited[0] = 1;
-        
         q.push(0);
+        visited[0] = 1;
+        cnt++;
         
         while(q.empty() != true)
         {
-            int node = q.front();
+            int x = q.front();
             q.pop();
             
-            for(auto it : adj[node])
+            for(auto it : adj[x])
             {
-                if(visited[it] == 0)
+                if(visited[it] == 0 && mp.find(it) == mp.end())
                 {
-                    if(mp.find(it) == mp.end())
-                    {
-                      visited[it] = 1;   
-                      ans++;
-                      q.push(it);
-                    }     
+                    cnt++;
+                    visited[it] = 1;
+                    q.push(it);
                 }
-               
             }
         }
         
-        return ans;
+        return cnt;
     }
 };
