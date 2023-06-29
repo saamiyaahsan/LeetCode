@@ -9,7 +9,7 @@ public:
             return;
         }
         
-        if(k < 0 || n < 0 || index < 1)
+        if(k < 0 || n < 0)
         {
             return;
         }
