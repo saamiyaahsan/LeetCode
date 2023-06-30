@@ -14,32 +14,32 @@ public:
     
     int cnt = 0;
     
-    void dfs(TreeNode* root,long long targetSum)
+    void helper(TreeNode* root,long long targetSum)
     {
         if(root == NULL)
         {
             return;
         }
         
-        if(targetSum - root->val == 0)
+        if(targetSum-root->val == 0)
         {
             cnt++;
+            // return;
         }
         
-        dfs(root->left,targetSum-root->val);
-        dfs(root->right,targetSum-root->val);
-        
+        helper(root->left,targetSum-root->val);
+        helper(root->right,targetSum-root->val);
     }
     
     int pathSum(TreeNode* root, int targetSum) {
         
-        
         if(root != NULL)
         {
-             dfs(root,targetSum);
-             pathSum(root->left,targetSum);
-             pathSum(root->right,targetSum);
+            helper(root,targetSum);
+            pathSum(root->left,targetSum);
+            pathSum(root->right,targetSum);
         }
+        
         
         return cnt;
     }
