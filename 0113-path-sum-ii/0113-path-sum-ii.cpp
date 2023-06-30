@@ -12,34 +12,34 @@
 class Solution {
 public:
     
-    void dfs(TreeNode* root,vector<int> res,vector<vector<int>>& ans,int targetSum)
+    void helper(TreeNode* root,int targetSum,vector<int>res,vector<vector<int>>& ans)
     {
         if(root == NULL)
         {
             return;
         }
         
-        res.push_back(root->val);
-              
+            res.push_back(root->val);
+        
         if(root->left == NULL && root->right == NULL)
-        {   
-            if(targetSum - root->val == 0)
+        {
+            if(targetSum-root->val == 0)
             {
                 ans.push_back(res);
                 return;
-            }   
+            }
         }
-            
-        dfs(root->left,res,ans,targetSum-root->val);
-        dfs(root->right,res,ans,targetSum-root->val);
+        
+        helper(root->left,targetSum-root->val,res,ans);
+        helper(root->right,targetSum-root->val,res,ans);
+        
     }
-    
     vector<vector<int>> pathSum(TreeNode* root, int targetSum) {
         
-        vector<vector<int>>ans;
         vector<int>res;
+        vector<vector<int>>ans;
         
-        dfs(root,res,ans,targetSum);
+        helper(root,targetSum,res,ans);
         
         return ans;
     }
