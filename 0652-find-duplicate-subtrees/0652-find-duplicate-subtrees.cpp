@@ -12,38 +12,39 @@
 class Solution {
 public:
     
-    string helper(TreeNode* root,vector<TreeNode*>& ans,map<string,int>& mp)
+    string helper(TreeNode* root,unordered_map<string,int>& mp,vector<TreeNode*>& res)
     {
         if(root == NULL)
         {
-            return "#";
+            return "";
         }
         
-        string p = helper(root->left,ans,mp);
-        string q = helper(root->right,ans,mp);
+        string t = "";
+       
+        t = t + to_string(root->val);
+        t = t + "->";
+        string left = helper(root->left,mp,res);
+        t = t + left;
+        t = t + "->";
+        string right = helper(root->right,mp,res);    
+        t = t + right;
         
-        string s = to_string(root->val) + "#" + p + "#" + q;
+        mp[t]++;
         
-        if(mp[s] == 1)
+        if(mp[t] == 2)
         {
-            ans.push_back(root);
+            res.push_back(root);
         }
         
-        mp[s]++;
-        return s;
+        return t;
     }
     vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
         
-        map<string,int>mp;
-        vector<TreeNode*>ans;
+        vector<TreeNode*>res;
+        unordered_map<string,int>mp;
         
-        if(root == NULL)
-        {
-            return ans;
-        }
+        helper(root,mp,res);
         
-        helper(root,ans,mp);
-        
-        return ans;
+        return res;
     }
 };
