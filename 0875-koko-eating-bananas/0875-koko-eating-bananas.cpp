@@ -30,7 +30,7 @@ public:
          
         if(func(piles,mid) <= h)
         {
-            // ans = func(piles,mid);
+            ans = mid;
             high = mid-1;
         }
          
@@ -40,7 +40,7 @@ public:
         }
      }
         
-        return low;
+        return ans;
         
     }
 };
