@@ -12,45 +12,37 @@
 class Solution {
 public:
     
+    int ans = 0;
     
-    int sum(TreeNode* root,int& cnt)
+    int totalNoOfNodes(TreeNode* root)
     {
         if(root == NULL)
         {
             return 0;
         }
         
-        cnt++;
-        
-        int left = sum(root->left,cnt);
-        int right = sum(root->right,cnt);
-        
-        return left+right+root->val;
+        return 1 + totalNoOfNodes(root->left) + totalNoOfNodes(root->right);
     }
-    
-    void solve(TreeNode* root,int &ans)
+    int helper(TreeNode* root)
     {
         if(root == NULL)
         {
-            return;
+            return 0;
         }
         
-        int cnt = 0;
-        int avg = sum(root,cnt)/cnt;
+        int sum = root->val + helper(root->left) + helper(root->right);
+        int cntofNodes = totalNoOfNodes(root);
         
-        if(avg == root->val)
+        if(root->val == sum/cntofNodes)
         {
             ans++;
         }
         
-        solve(root->left,ans);
-        solve(root->right,ans);
+        return sum;
     }
-    
     int averageOfSubtree(TreeNode* root) {
         
-        int ans = 0;
-        solve(root,ans);
+        helper(root);
         
         return ans;
     }
