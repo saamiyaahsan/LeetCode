@@ -2,8 +2,21 @@ class Solution {
 public:
     int majorityElement(vector<int>& nums) {
         
-        sort(nums.begin(),nums.end());
+        map<int,int>mp;
         
-        return nums[nums.size()/2];
+        for(int i=0;i<nums.size();i++)
+        {
+            mp[nums[i]]++;
+        }
+        
+        for(auto it : mp)
+        {
+            if(it.second > nums.size()/2)
+            {
+                return it.first;
+            }
+        }
+        
+        return -1;
     }
 };
