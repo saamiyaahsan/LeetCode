@@ -2,45 +2,39 @@ class Solution {
 public:
     bool isValid(string s) {
         
-//         stack<char>st;
-        
-//         for(auto c : s)
-//         {
-//             if(c == '(' || c == '{' || c == '[')
-//             {
-//                 st.push(c);
-//             }
-            
-//             else
-//             {
-//                 if(st.empty() == true || (st.top() == '(' && c != ')') || (st.top() == '{' && c != '}') || (st.top() == '[' && c != ']'))
-//                 {
-//                     return false;
-//                 }
-                
-//                 st.pop();
-//             }
-//         }
-        
-//         return st.empty();
-        
         stack<char>st;
         
         for(int i=0;i<s.size();i++)
         {
-            if(s[i] == '(' || s[i] == '{' || s[i] == '[')
+            if(st.empty() == true)
+            {
+                if(s[i] == '(' || s[i] == '{' || s[i] == '[')
+                {
+                    st.push(s[i]);
+                }
+                
+                else
+                {
+                    return false;
+                }
+            }
+            
+            else if(st.empty() != true && s[i] == '(' || s[i] == '{' || s[i] == '[')
             {
                 st.push(s[i]);
             }
             
-            else
+            else if(st.empty() != true && s[i] == ')' || s[i] == '}' || s[i] == ']')
             {
-                if(st.empty() == true || st.top() == '(' && s[i] != ')' || st.top() == '{' && s[i] != '}' || st.top() == '[' && s[i] != ']')
+                if(st.top() == '(' && s[i] == ')' || st.top() == '{' && s[i] == '}' || st.top() == '[' && s[i] == ']')
                 {
-                    return false;      
+                    st.pop();
                 }
                 
-                st.pop();
+                else
+                {
+                    return false;
+                }
             }
         }
         
