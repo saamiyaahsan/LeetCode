@@ -1,26 +1,37 @@
 class Solution {
 public:
-    int numberOfSubstrings(string s) {
+    
+    int helper(string s,int K)
+    {
+         map<char,int>mp;
+        int j = 0,ans = 0;
         
-        int i,j,ans = 0;
-        
-        vector<int>visited(3,0);
-        
-        j = 0;
-        
-        for(i=0;i<s.size();i++)
+        for(int i=0;i<s.size();i++)
         {
-            visited[s[i]-'a']++;
+            mp[s[i]]++;
             
-            while(visited[0] && visited[1] && visited[2])
+            while(mp.size() > K)
             {
-                visited[s[j]-'a']--;
+                mp[s[j]]--;
                 
-                ans = ans + s.size()-i;
+                if(mp[s[j]] == 0)
+                {
+                    mp.erase(s[j]);
+                }
                 
                 j++;
             }
+            
+            ans = ans + (i-j+1);
         }
+        
+        return ans;  
+    }
+    int numberOfSubstrings(string s) {
+        
+        int ans ;
+      
+        ans = helper(s,3) - helper(s,2);
         
         return ans;
     }
