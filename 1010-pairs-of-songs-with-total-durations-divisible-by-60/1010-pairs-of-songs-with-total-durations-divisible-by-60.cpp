@@ -8,8 +8,8 @@ public:
         
         for(auto it : time)
         {
-            res = res + ans[(540-it)%60];
-            ans[it%60]++;
+            res = res + ans[(660-it) % 60];
+            ans[it % 60]++;
         }
         
         return res;
