@@ -2,41 +2,22 @@ class Solution {
 public:
     
     bool helper(vector<vector<int>>& graph,int node,vector<int>& color)
-    {
-        queue<int>q;
-        
-        color[node] = 0;
-        
-        q.push(node);
-        
-        while(q.empty() != true)
+    { 
+        for(auto it : graph[node])
         {
-            int x = q.front();
-            q.pop();
-            
-            for(auto it : graph[x])
+            if(color[it] == -1)
             {
-                if(color[it] == -1)
-                {
-                    if(color[x] == 1)
-                    {
-                        color[it] = 0;
-                    }
-                    
-                    else
-                    {
-                        color[it] = 1;
-                    }
-                    
-                     q.push(it);
-                }
+                color[it] = 1 - color[node];
                 
-                if(color[it] == color[x])
+                if(helper(graph,it,color) == false)
                 {
                     return false;
                 }
-                
-               
+            }
+            
+            else if(color[it] == color[node])
+            {
+                return false;
             }
         }
         
@@ -50,11 +31,11 @@ public:
         {
             if(color[i] == -1)
             {   
+                color[i] = 0;
                 if(helper(graph,i,color) == false)
                 {
-                    return false;     
+                    return false;
                 }
-               
             }
         }
         
