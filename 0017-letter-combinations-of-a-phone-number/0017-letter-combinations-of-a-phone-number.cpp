@@ -3,10 +3,10 @@ public:
     
     void helper(string digits,int index,string p,vector<string>& res,unordered_map<int,string>& mp)
     {
-        if(index > digits.size())
-        {
-            return;
-        }
+//         if(index > digits.size())
+//         {
+//             return;
+//         }
         
         if(index == digits.size())
         {
