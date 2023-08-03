@@ -1,16 +1,11 @@
 class Solution {
 public:
     
-    void helper(string digits,int index,string p,vector<string>& res,unordered_map<int,string>& mp)
+    void helper(int index,string digits,string p,map<int,string>& mp,vector<string>& ans)
     {
-//         if(index > digits.size())
-//         {
-//             return;
-//         }
-        
         if(index == digits.size())
         {
-            res.push_back(p);
+            ans.push_back(p);
             return;
         }
         
@@ -19,13 +14,15 @@ public:
         for(int i=0;i<x.size();i++)
         {
             p.push_back(x[i]);
-            helper(digits,index+1,p,res,mp);
+            helper(index+1,digits,p,mp,ans);
             p.pop_back();
         }
+    
     }
     vector<string> letterCombinations(string digits) {
         
-        unordered_map<int,string>mp;
+        map<int,string>mp;
+        
         mp[2] = "abc";
         mp[3] = "def";
         mp[4] = "ghi";
@@ -35,16 +32,17 @@ public:
         mp[8] = "tuv";
         mp[9] = "wxyz";
         
-        string p;
-        vector<string>res;
+        vector<string>ans;
         
         if(digits.size() == 0)
         {
-            return res;
+            return ans;
         }
-        int index = 0;
-        helper(digits,index,p,res,mp);
         
-        return res;
+        string p = "";
+        
+        helper(0,digits,p,mp,ans);
+    
+        return ans;
     }
 };
