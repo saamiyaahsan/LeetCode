@@ -1,39 +1,47 @@
 class Solution {
 public:
     vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
-        
+         
         int n = graph.size();
-        vector<int>indegree(n,0);
         
-        vector<vector<int>>adj(n);
+        vector<vector<int>>adj(n); // for the reversal of graph
+        
+        vector<int>indegree(n,0);
         
         for(int i=0;i<n;i++)
         {
             for(auto it : graph[i])
             {
                 adj[it].push_back(i);
-                indegree[i]++;
             }
         }
         
-        queue<int>q;
+        for(int i=0;i<n;i++)
+        {
+            for(auto it : adj[i])
+            {
+               indegree[it]++;    
+            }
+            
+        }
         
-        vector<bool>safe(n);
+        queue<int>q;
+        vector<int>res;
         
         for(int i=0;i<n;i++)
         {
             if(indegree[i] == 0)
             {
-                q.push(i);     
+                q.push(i);
             }
-           
         }
         
         while(q.empty() != true)
         {
             int node = q.front();
             q.pop();
-            safe[node] = true;
+            
+            res.push_back(node);
             
             for(auto it : adj[node])
             {
@@ -46,16 +54,8 @@ public:
             }
         }
         
-        vector<int>safeNodes;
+        sort(res.begin(),res.end());
         
-        for(int i=0;i<n;i++)
-        {
-            if(safe[i] == true)
-            {
-                safeNodes.push_back(i);
-            }
-        }
-        
-        return safeNodes;
+        return res;
     }
 };
