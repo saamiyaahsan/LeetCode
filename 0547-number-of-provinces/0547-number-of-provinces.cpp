@@ -1,46 +1,119 @@
-class Solution {
-public:
+class DisjointSet
+{
+    vector<int>rank,parent,size;
     
-    void dfs(int node,vector<int>& visited,vector<int>adj[])
-    {
-       visited[node] = 1;
-       
-       for(auto it : adj[node]) 
-       {
-           if(visited[it] == 0)
-           {
-               dfs(it,visited,adj);
-           }
-       }
-    }
+    public:
+      DisjointSet(int n)
+      {
+          rank.resize(n+1);
+          parent.resize(n+1);
+          size.resize(n+1);
+          
+          for(int i=0;i<=n;i++)
+          {
+              parent[i] = i;
+              size[i] = 1;
+          }
+      }
+      
+      int findUparent(int node)
+      {
+          if(node == parent[node])
+          {
+              return node;
+          }
+          
+          return parent[node] = findUparent(parent[node]);
+      }
+      
+      void UnionByRank(int u,int v)
+      {
+          int ulp_u = findUparent(u);
+          int ulp_v = findUparent(v);
+          
+          if(ulp_u == ulp_v)
+          {
+              return;
+          }
+          
+          if(rank[ulp_v] < rank[ulp_v])
+          {
+              parent[ulp_u] = ulp_v;
+          }
+          
+          else if(rank[ulp_v] > rank[ulp_u])
+          {
+              parent[ulp_v] = ulp_u;
+          }
+          
+          else
+          {
+              parent[ulp_v] = ulp_u;
+              rank[ulp_u]++;
+          }
+      }
+      
+      void UnionBySize(int u,int v)
+      {
+          int ulp_u = findUparent(u);
+          int ulp_v = findUparent(v);
+          
+          if(ulp_u == ulp_v)
+          {
+              return;
+          }
+          
+          if(size[ulp_u] < size[ulp_v])
+          {
+               parent[ulp_u] = ulp_v;
+               size[ulp_v] = size[ulp_v] + size[ulp_u];
+          }
+          
+          else
+          {
+               parent[ulp_v] = ulp_u;
+               size[ulp_u] = size[ulp_v] + size[ulp_u];
+          }
+      }
+};
+
+
+
+class Solution {
+public:    
+    
     int findCircleNum(vector<vector<int>>& isConnected) {
         
-        int cnt = 0;
+        int n = isConnected.size();
         
-        vector<int>adj[isConnected[0].size()];
+        vector<vector<int>>adj(n);
         
-        for(int i=0;i<isConnected.size();i++)
-        {
-            for(int j=0;j<isConnected[0].size();j++)
-            {
-                if(isConnected[i][j] == 1 && i != j)
-                {
+        DisjointSet ds(n);
+        
+       for(int i = 0;i < isConnected.size();i++)   
+       {
+           for(int j = 0;j < isConnected[0].size();j++)
+           {
+               if(i != j && isConnected[i][j] == 1)
+               {
                    adj[i].push_back(j);
-                   adj[j].push_back(i);  
-                }
-            }
-        }
+                   adj[j].push_back(i);
+                   ds.UnionBySize(i,j);
+               }
+           }
+       }
+       
+       int cnt = 0; 
         
-        vector<int>visited(isConnected[0].size(),0);
+       for(int i=0;i<n;i++) 
+       {
+           if(i == ds.findUparent(i))
+           {
+               cnt++;
+           }
+       }
         
-        for(int i=0;i<isConnected[0].size();i++)
-        {
-            if(visited[i] == 0)
-            {
-                cnt++;
-                dfs(i,visited,adj);
-            }
-        }
-    return cnt;
+       return cnt; 
+        
     }
 };
