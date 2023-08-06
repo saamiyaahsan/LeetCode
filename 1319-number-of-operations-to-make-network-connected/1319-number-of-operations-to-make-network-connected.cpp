@@ -22,15 +22,13 @@ public:
         
         vector<vector<int>>adj(n);
         
-        vector<int>visited(n,0);
-        
         for(int i=0;i<connections.size();i++)
         {
             adj[connections[i][0]].push_back(connections[i][1]);
             adj[connections[i][1]].push_back(connections[i][0]);
         }
         
-        dfs(adj,0,visited);
+        vector<int>visited(n,0);
         
         int cnt = 0;
         
@@ -43,6 +41,6 @@ public:
             }
         }
         
-        return cnt;
+        return cnt-1;
     }
 };
