@@ -12,115 +12,99 @@
 class Solution {
 public:
     
-    void child_parent(TreeNode* root,unordered_map<TreeNode*,TreeNode*>& parent)
+    void Parent_child(TreeNode* root,unordered_map<TreeNode*,TreeNode*>& parent)
     {
-        if(root == NULL)
-        {
-            return;
-        }
-        
         parent[root] = NULL;
         
         queue<TreeNode*>q;
+        
         q.push(root);
         
         while(q.empty() != true)
         {
-            int n = q.size();
+            auto x = q.front();
+            q.pop();
             
-            for(int i=0;i<n;i++)
+            if(x->left != NULL)
             {
-                TreeNode* t = q.front();
-                q.pop();
-                
-                if(t->left != NULL)
-                {
-                    parent[t->left] = t;
-                    q.push(t->left);
-                }
-                
-                if(t->right != NULL)
-                {
-                    parent[t->right] = t;
-                    q.push(t->right);
-                }
+                parent[x->left] = x;
+                q.push(x->left);
+            }
+            
+            if(x->right != NULL)
+            {
+                parent[x->right] = x;
+                q.push(x->right);
             }
         }
+        
     }
     int amountOfTime(TreeNode* root, int start) {
         
-       unordered_map<TreeNode*,TreeNode*>parent;
-       unordered_map<TreeNode*,bool>visited(false); 
-       child_parent(root,parent); 
-       
-       queue<pair<TreeNode*,int>>Q; 
+        unordered_map<TreeNode*,TreeNode*>parent;
         
-       queue<TreeNode*>q; 
-       q.push(root); 
+        unordered_map<TreeNode*,bool>visited;
         
+        Parent_child(root,parent);
         
-       while(q.empty() != true) 
-       {
-           int n = q.size();
-           
-           for(int i=0;i<n;i++)
-           {
-               TreeNode* t = q.front();
-               q.pop();
-               
-               if(t->val == start)
-               {
-                   Q.push({t,0});
-                   visited[t] = true;
-                   break;
-               }
-               
-               if(t->left != NULL)
-               {
-                   q.push(t->left);
-               }
-               
-               if(t->right != NULL)
-               {
-                   q.push(t->right);
-               }
-           }
-       }
+        queue<TreeNode*>q;
+        queue<pair<TreeNode*,int>>Q;
         
-       int ans = INT_MIN; 
+        q.push(root);
         
-       while(Q.empty() != true) 
-       {
-           int n = Q.size();
-           
-           for(int i=0;i<n;i++)
-           {
-               auto x = Q.front();
-               Q.pop();
-               
-               TreeNode* t = x.first;
-               int dis = x.second;
-               ans = max(ans,dis);
-               
-               if(t->left != NULL && visited[t->left] == false)
-               {
-                   Q.push({t->left,dis+1});
-                   visited[t->left] = true;
-               }
-               
-               if(t->right != NULL && visited[t->right] == false)
-               {
-                   Q.push({t->right,dis+1});
-                   visited[t->right] = true;
-               }
-               
-               if(parent[t] != NULL && visited[parent[t]] == false)
-               {
-                   Q.push({parent[t],dis+1});
-                   visited[parent[t]] = true;
-               }
-           }
-       }
+        while(q.empty() != true)
+        {
+            auto t = q.front();
+            q.pop();
+            
+            if(t->val == start)
+            {
+                Q.push({t,0});
+                visited[t] = true;
+                break;
+            }
+            
+            if(t->left != NULL)
+            {
+                q.push(t->left);
+            }
+            
+            if(t->right != NULL)
+            {
+                q.push(t->right);
+            }
+        }
+        
+        int ans = 0;
+        
+        while(Q.empty() != true)
+        {   
+
+            auto t = Q.front();
+            Q.pop();
+            
+            TreeNode* y = t.first;
+            int time = t.second;
+            ans = max(ans,time);
+            
+            if(parent[y] != NULL && visited[parent[y]] == false)
+            {
+                visited[parent[y]] = true;
+                Q.push({parent[y],time+1});
+            }
+            
+            if(y->left != NULL && visited[y->left] == false)
+            {
+                visited[y->left] = true;
+                Q.push({y->left,time+1});
+            }
+            
+            if(y->right != NULL && visited[y->right] == false)
+            {
+                visited[y->right] = true;
+                Q.push({y->right,time+1});
+            }
+        }
         
         return ans;
     }
