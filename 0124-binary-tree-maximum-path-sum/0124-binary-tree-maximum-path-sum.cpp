@@ -22,17 +22,7 @@ public:
         int l = helper(root->left,ans);
         int r = helper(root->right,ans);
         
-        if(l < 0)
-        {
-            l = 0;
-        }
-        
-        if(r < 0)
-        {
-            r = 0;
-        }
-        
-        int height = max(l,r) + root->val;
+        int height = max({max(l,r) + root->val,root->val,0});
         
         ans = max({ans,l+r+root->val,l+root->val,r+root->val,root->val});
         
