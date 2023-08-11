@@ -21,6 +21,7 @@ public:
         while(q.empty() != true)
         {
             auto it = q.front();
+            q.pop();
             string curr = it.first;
             int steps = it.second;
             
@@ -28,9 +29,7 @@ public:
             {
                 return steps;
             }
-             q.pop();
-            
-            
+          
             for(int i=0;i<4;i++)
             {
                string up = curr;
