@@ -28,7 +28,7 @@ public:
         {
             for(int j=0;j<grid1[0].size();j++)
             {
-                if(grid2[i][j] == 1)
+                if(grid2[i][j] == 1 && grid1[i][j] == grid2[i][j])
                 {
                     bool subisland = true;
                     dfs(grid1,grid2,i,j,subisland);
