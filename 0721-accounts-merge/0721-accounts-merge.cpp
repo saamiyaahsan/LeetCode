@@ -102,7 +102,7 @@ public:
                 
                 else
                 {
-                    ds.unionBySize(i,MapmailNode[mail]);
+                    ds.unionByRank(i,MapmailNode[mail]);
                 }
             }
         }
