@@ -1,12 +1,23 @@
-
-struct Node
-{
-    Node* links[26];
+class TrieNode
+{   
+    private:  
+    TrieNode* links[26];
     bool flag = false;
     
-    bool containskey(char ch)
+    public:
+    bool containsKey(char ch)
     {
         return links[ch-'a'] != NULL;
+    }
+    
+    void put(char ch,TrieNode* node)
+    {
+        links[ch-'a'] = node;
+    }
+    
+    TrieNode* get(char ch)
+    {
+        return links[ch-'a'];
     }
     
     bool setEnd()
@@ -19,39 +30,33 @@ struct Node
     {
         return flag;
     }
-    
-    void put(char ch,Node* node)
-    {
-        links[ch-'a'] = node;
-    }
-    
-    Node* get(char ch)
-    {
-        return links[ch-'a'];
-    }
 };
 
+
 class Trie {
-    
-private: Node* root;    
+
+private:
+    TrieNode* root;
     
 public:
-    
     Trie() {
         
-        root = new Node();
+        root = new TrieNode();
+        
     }
     
     void insert(string word) {
-        Node* node = root;
+        
+        TrieNode* node = root;
         
         for(int i=0;i<word.size();i++)
         {
-            if(node->containskey(word[i]) == false)
+            if(node->containsKey(word[i]) == NULL)
             {
-                node->put(word[i],new Node());
+                node->put(word[i],new TrieNode());
             }
             
+            // moves to the reference trie
             node = node->get(word[i]);
         }
         
@@ -60,11 +65,11 @@ public:
     
     bool search(string word) {
         
-        Node* node = root;
+        TrieNode* node = root;
         
         for(int i=0;i<word.size();i++)
         {
-            if(node->containskey(word[i]) == false)
+            if(node->containsKey(word[i]) == NULL)
             {
                 return false;
             }
@@ -77,17 +82,16 @@ public:
     
     bool startsWith(string prefix) {
         
-        Node* node = root;
+        TrieNode* node = root;
         
         for(int i=0;i<prefix.size();i++)
         {
-            if(node->containskey(prefix[i]) == false)
+            if(node->containsKey(prefix[i]) == NULL)
             {
                 return false;
             }
             
             node = node->get(prefix[i]);
-            
         }
         
         return true;
