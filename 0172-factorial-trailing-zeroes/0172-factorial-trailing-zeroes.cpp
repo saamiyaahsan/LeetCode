@@ -1,16 +1,15 @@
 class Solution {
 public:
-    int trailingZeroes(int n) 
-    {
-        int ans = 0,p;
+    int trailingZeroes(int n) {
         
-        while(n >= 5)
+        long long cnt = 0;
+        
+        for(int i=5;n/i>=1;i*5)
         {
-            p = n/5;
-            ans = ans + p;
-            n = n/5;
+            cnt = cnt + (n/i);
+            n = n/i;
         }
         
-        return ans;
+        return cnt;
     }
 };
