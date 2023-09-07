@@ -22,10 +22,10 @@ public:
             }
             
             st.insert(p);
-            
             p = p->next;
         }
         
         return false;
+        
     }
 };
