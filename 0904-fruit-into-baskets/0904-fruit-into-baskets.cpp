@@ -10,7 +10,7 @@ public:
         {
             mp[fruits[i]]++;
             
-             while(mp.size() > 2)
+            while(mp.size() > 2)
             {
                 mp[fruits[j]]--;
                 
@@ -18,10 +18,12 @@ public:
                 {
                     mp.erase(fruits[j]);
                 }
+                
                 j++;
             }
             
             ans = max(ans,i-j+1);
+            
         }
         
         return ans;
