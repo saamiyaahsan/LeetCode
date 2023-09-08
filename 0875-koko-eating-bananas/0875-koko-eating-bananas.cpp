@@ -1,46 +1,45 @@
 class Solution {
 public:
     
-    long long func(vector<int>& piles,int cnt)
+    long long countminSpeed(vector<int>& piles,int k)
     {
-        long long total_hrs = 0;
+        long long ans = 0;
         
         for(int i=0;i<piles.size();i++)
         {
-            total_hrs = total_hrs + ceil((double)(piles[i])/(double)(cnt));
+            ans = ans + ceil((double)(piles[i])/(double)(k));
         }
         
-        return total_hrs;
+        return ans;
     }
     
     int minEatingSpeed(vector<int>& piles, int h) {
-     
-     int maxi = INT_MIN;   
-        
-     for(int i=0;i<piles.size();i++)   
-     {
-         maxi = max(maxi,piles[i]);
-     }
        
-     int low = 1 , high = maxi,ans=0;   
+        int maxi = 0;
         
-     while(low <= high)   
-     {
-        int mid = (low + high)/2;
-         
-        if(func(piles,mid) <= h)
+        for(int i=0;i<piles.size();i++)
         {
-            ans = mid;
-            high = mid-1;
+            maxi = max(maxi,piles[i]);
         }
-         
-        else
+        
+        int low = 1,high = maxi,ans = 0;
+        
+        while(low <= high)
         {
-            low = mid+1;
+            int mid = (low + high)/2;
+            
+            if(countminSpeed(piles,mid) <= h)
+            {
+                ans = mid;
+                high = mid - 1;
+            }
+            
+            else
+            {
+                low = mid + 1;
+            }
         }
-     }
         
         return ans;
-        
     }
 };
