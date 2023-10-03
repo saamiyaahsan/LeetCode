@@ -2,7 +2,7 @@ class Solution {
 public:
     int mySqrt(int x) {
        
-        int low,high;
+        int low,high,ans=-1;
          
         low = 0;
         high = x;
@@ -21,22 +21,20 @@ public:
         {
             int mid = (low + high)/2;
             
-            if(mid == x/mid)
+            if(mid <= x/mid)
             {
-                return mid;
-            }
-            
-            else if(mid > x/mid)
-            {
-                high = mid-1;
+                ans = mid;
+                low = mid+1;
             }
             
             else
             {
-                low = mid+1;
+                high = mid-1;
             }
+            
+            
         }
         
-        return high;
+        return ans;
     }
 };
