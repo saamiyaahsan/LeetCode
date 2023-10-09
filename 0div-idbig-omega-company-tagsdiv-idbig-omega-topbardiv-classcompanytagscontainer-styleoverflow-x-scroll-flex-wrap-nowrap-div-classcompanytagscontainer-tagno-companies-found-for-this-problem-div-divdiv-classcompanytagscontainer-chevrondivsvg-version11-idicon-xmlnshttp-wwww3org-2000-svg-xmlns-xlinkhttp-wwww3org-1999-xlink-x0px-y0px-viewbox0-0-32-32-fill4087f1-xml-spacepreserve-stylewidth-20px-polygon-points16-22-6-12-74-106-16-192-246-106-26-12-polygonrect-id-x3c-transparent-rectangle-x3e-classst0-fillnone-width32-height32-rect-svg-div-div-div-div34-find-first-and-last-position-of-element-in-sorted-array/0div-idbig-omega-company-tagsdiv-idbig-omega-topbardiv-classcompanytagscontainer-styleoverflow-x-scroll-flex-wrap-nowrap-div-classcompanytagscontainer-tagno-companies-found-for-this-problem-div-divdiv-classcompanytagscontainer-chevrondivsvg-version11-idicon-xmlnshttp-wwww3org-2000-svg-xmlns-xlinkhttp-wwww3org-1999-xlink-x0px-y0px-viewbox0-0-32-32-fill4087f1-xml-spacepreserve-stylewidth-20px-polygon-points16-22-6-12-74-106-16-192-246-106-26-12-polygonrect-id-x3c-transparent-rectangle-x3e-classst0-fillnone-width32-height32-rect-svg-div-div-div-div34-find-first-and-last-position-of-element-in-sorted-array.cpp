@@ -4,65 +4,61 @@ public:
         
         vector<int>res;
         
-        if(nums.empty() == true)
-        {
-            res.push_back(-1);
-            res.push_back(-1);
-            return res;
-        }
+        int l,r,low,high;
         
-        int i=0,j=nums.size()-1,ans = -1;
+        l = -1;
+        r = -1;
         
-        while(i <= j)
+        low = 0;
+        high = nums.size()-1;
+        
+        while(low <= high)
         {
-            int mid = (i+j)/2;
+            int mid = (low + high)/2;
             
             if(nums[mid] == target)
             {
-                ans = mid;
-                j = mid-1;
+                l = mid;
+                high = mid-1;
             }
             
-            else if(nums[mid] > target)
+            else if(nums[mid] < target)
             {
-                j = mid-1;
+                low = mid + 1;
             }
             
             else
             {
-                i = mid+1;
+                high = mid-1;
             }
         }
         
-        res.push_back(ans);
+        low = 0;
+        high = nums.size()-1;
         
-        ans = -1;
-        
-        i = 0;
-        j = nums.size()-1;
-        
-        while(i <= j)
+        while(low <= high)
         {
-            int mid = (i+j)/2;
+            int mid = (low + high)/2;
             
             if(nums[mid] == target)
             {
-                ans = mid;
-                i = mid+1;
+                r = mid;
+                low = mid + 1;
             }
             
-            else if(nums[mid] > target)
+            else if(nums[mid] < target)
             {
-                j = mid-1;
+                low = mid + 1;
             }
             
             else
             {
-                i = mid+1;
+                high = mid - 1;
             }
         }
         
-        res.push_back(ans);
+        res.push_back(l);
+        res.push_back(r);
         
         return res;
     }
